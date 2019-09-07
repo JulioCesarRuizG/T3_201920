@@ -7,7 +7,7 @@ package model.data_structures;
  * @author Fernando De la Rosa
  *
  */
-public class ArregloDinamico implements IArregloDinamico {
+public class ArregloDinamico<T extends Comparable <T>> implements IArregloDinamico<T> {
 		/**
 		 * Capacidad maxima del arreglo
 		 */
@@ -19,7 +19,7 @@ public class ArregloDinamico implements IArregloDinamico {
         /**
          * Arreglo de elementos de tamaNo maximo
          */
-        private String elementos[ ];
+        private T[] elementos;
 
         /**
          * Construir un arreglo con la capacidad maxima inicial.
@@ -27,18 +27,18 @@ public class ArregloDinamico implements IArregloDinamico {
          */
 		public ArregloDinamico( int max )
         {
-               elementos = new String[max];
+               elementos = (T[]) new Object[max];
                tamanoMax = max;
                tamanoAct = 0;
         }
         
-		public void agregar( String dato )
+		public void agregar( T dato )
         {
                if ( tamanoAct == tamanoMax )
                {  // caso de arreglo lleno (aumentar tamaNo)
                     tamanoMax = 2 * tamanoMax;
-                    String [ ] copia = elementos;
-                    elementos = new String[tamanoMax];
+                    T[ ] copia = elementos;
+                    elementos = (T[]) new Object[tamanoMax];
                     for ( int i = 0; i < tamanoAct; i++)
                     {
                      	 elementos[i] = copia[i];
@@ -57,20 +57,37 @@ public class ArregloDinamico implements IArregloDinamico {
 			return tamanoAct;
 		}
 
-		public String darElemento(int i) {
-			// TODO implementar
+		public T darElemento(int i) {
+			return elementos[i];
+		}
+
+		public T buscar(T dato) {
+			for(int i=0 ; i<elementos.length ; i++)
+			{
+				if(elementos[i].compareTo(dato) == 0)
+				{
+					return elementos[i];
+				}
+			}
 			return null;
 		}
 
-		public String buscar(String dato) {
-			// TODO implementar
-			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-			return null;
-		}
-
-		public String eliminar(String dato) {
-			// TODO implementar
-			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+		public T eliminar(T dato) {
+			for(int i=0 ; i<elementos.length ; i++)
+			{
+				if(elementos[i].compareTo(dato) == 0)
+				{
+					int mayor = 0;
+					T eliminar = elementos[i];
+					for(int j=i ; j<elementos.length-1 ; j++)
+					{
+						elementos[j] = elementos[j+1]; 
+						mayor = j+1;
+					}
+					elementos[mayor] = null;
+					return eliminar;
+				}
+			}
 			return null;
 		}
 
