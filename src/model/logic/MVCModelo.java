@@ -31,7 +31,7 @@ public class MVCModelo {
 			reader= new CSVReader(new FileReader(ruta));
 			int M=0;
 			for(String[] nextLine : reader) {
-				if(nextLine.toString().contains("sourceid,dstid,month,mean_travel_time,standard_deviation_travel_time,geometric_mean_travel_time,geometric_standard_deviation_travel_time"))
+				if(nextLine.toString().contains("sourceid,dstid,hod,mean_travel_time,standard_deviation_travel_time,geometric_mean_travel_time,geometric_standard_deviation_travel_time"))
 				{
 
 				}
