@@ -58,21 +58,21 @@ public class MVCModelo {
 			System.out.println("**Información del último** : " + ultimo.darInicioID() + ", " + ultimo.darDestinoID() + ", " + ultimo.darHora() + ", " + ultimo.darTiempoPromedioEnSegundos());
 		}
 		catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} finally{
-		if (reader != null) {
-			try {
-				reader.close();
+			e.printStackTrace();
+		} finally{
+			if (reader != null) {
+				try {
+					reader.close();
 
-			} catch (IOException e) {
-				e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		}
 
+		}
 	}
-}
-	
-	
+
+
 	public ArregloDinamico darViajesPorHora(int hora)
 	{
 		ArregloDinamico cumplen = null;
@@ -89,4 +89,22 @@ public class MVCModelo {
 		System.out.println("La cantidad de viajes resultantes es: " + numero);
 		return cumplen;
 	}
+
+	public int OrdenarPorshellSort(UBERTrip elementos, int n) 
+	{ 
+		for (int num = n/2; num > 0; num /= 2) 
+		{ 
+			for (int i = num; i < n; i += 1) 
+			{ 
+				UBERTrip temp = (UBERTrip)arreglo.darElemento(i);
+				int j;             
+				for (j = i; j >= num && arreglo.darElemento(j-num).compareTo(temp) >= 1; j -= num) 
+				{
+					arreglo.sobreEscribir(arreglo.darElemento(j-num), j);
+				}
+				arreglo.sobreEscribir(temp, j);
+			} 
+		} 
+		return 0; 
+	} 
 }

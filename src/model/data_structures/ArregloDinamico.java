@@ -8,87 +8,90 @@ package model.data_structures;
  *
  */
 public class ArregloDinamico<T extends Comparable <T>> implements IArregloDinamico<T> {
-		/**
-		 * Capacidad maxima del arreglo
-		 */
-        private int tamanoMax;
-		/**
-		 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
-		 */
-        private int tamanoAct;
-        /**
-         * Arreglo de elementos de tamaNo maximo
-         */
-        private T[] elementos;
+	/**
+	 * Capacidad maxima del arreglo
+	 */
+	private int tamanoMax;
+	/**
+	 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
+	 */
+	private int tamanoAct;
+	/**
+	 * Arreglo de elementos de tamaNo maximo
+	 */
+	private T[] elementos;
 
-        /**
-         * Construir un arreglo con la capacidad maxima inicial.
-         * @param max Capacidad maxima inicial
-         */
-		public ArregloDinamico( int max )
-        {
-               elementos = (T[]) new Object[max];
-               tamanoMax = max;
-               tamanoAct = 0;
-        }
-        
-		public void agregar( T dato )
-        {
-               if ( tamanoAct == tamanoMax )
-               {  // caso de arreglo lleno (aumentar tamaNo)
-                    tamanoMax = 2 * tamanoMax;
-                    T[ ] copia = elementos;
-                    elementos = (T[]) new Object[tamanoMax];
-                    for ( int i = 0; i < tamanoAct; i++)
-                    {
-                     	 elementos[i] = copia[i];
-                    } 
-            	    System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " + tamanoMax);
-               }	
-               elementos[tamanoAct] = dato;
-               tamanoAct++;
-       }
+	/**
+	 * Construir un arreglo con la capacidad maxima inicial.
+	 * @param max Capacidad maxima inicial
+	 */
+	public ArregloDinamico( int max )
+	{
+		elementos = (T[]) new Object[max];
+		tamanoMax = max;
+		tamanoAct = 0;
+	}
 
-		public int darCapacidad() {
-			return tamanoMax;
-		}
-
-		public int darTamano() {
-			return tamanoAct;
-		}
-
-		public T darElemento(int i) {
-			return elementos[i];
-		}
-
-		public T buscar(T dato) {
-			for(int i=0 ; i<elementos.length ; i++)
+	public void agregar( T dato )
+	{
+		if ( tamanoAct == tamanoMax )
+		{  // caso de arreglo lleno (aumentar tamaNo)
+			tamanoMax = 2 * tamanoMax;
+			T[ ] copia = elementos;
+			elementos = (T[]) new Object[tamanoMax];
+			for ( int i = 0; i < tamanoAct; i++)
 			{
-				if(elementos[i].compareTo(dato) == 0)
-				{
-					return elementos[i];
-				}
-			}
-			return null;
-		}
+				elementos[i] = copia[i];
+			} 
+			System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " + tamanoMax);
+		}	
+		elementos[tamanoAct] = dato;
+		tamanoAct++;
+	}
 
-		public T eliminar(T dato) {
-			for(int i=0 ; i<elementos.length ; i++)
+	public int darCapacidad() {
+		return tamanoMax;
+	}
+
+	public int darTamano() {
+		return tamanoAct;
+	}
+
+	public T darElemento(int i) {
+		return elementos[i];
+	}
+
+	public void sobreEscribir(T dato, int i)
+	{
+		elementos[i] = dato;
+	}
+	public T buscar(T dato) {
+		for(int i=0 ; i<elementos.length ; i++)
+		{
+			if(elementos[i].compareTo(dato) == 0)
 			{
-				if(elementos[i].compareTo(dato) == 0)
-				{
-					int mayor = 0;
-					T eliminar = elementos[i];
-					for(int j=i ; j<elementos.length-1 ; j++)
-					{
-						elementos[j] = elementos[j+1]; 
-						mayor = j+1;
-					}
-					elementos[mayor] = null;
-					return eliminar;
-				}
+				return elementos[i];
 			}
-			return null;
 		}
+		return null;
+	}
 
+	public T eliminar(T dato) {
+		for(int i=0 ; i<elementos.length ; i++)
+		{
+			if(elementos[i].compareTo(dato) == 0)
+			{
+				int mayor = 0;
+				T eliminar = elementos[i];
+				for(int j=i ; j<elementos.length-1 ; j++)
+				{
+					elementos[j] = elementos[j+1]; 
+					mayor = j+1;
+				}
+				elementos[mayor] = null;
+				return eliminar;
+			}
+		}
+		return null;
+	}
 }
