@@ -90,8 +90,9 @@ public class MVCModelo {
 		return cumplen;
 	}
 
-	public int OrdenarPorshellSort(ArregloDinamico elementos) 
-	{   int N=elementos.darTamano();
+	public ArregloDinamico<String> OrdenarPorshellSort(ArregloDinamico elementos) 
+	{   long startTime = System.currentTimeMillis(); 
+		int N=elementos.darTamano();
 	    int h=1;
 		for (int num = N/2; num > 0; num /= 2) 
 		{ 
@@ -106,6 +107,18 @@ public class MVCModelo {
 				elementos.sobreEscribir(temp, j);
 			} 
 		} 
-		return 0; 
+		long endTime = System.currentTimeMillis(); 
+		long duration=endTime-startTime;
+		ArregloDinamico<String> respuesta=  new ArregloDinamico<String>(22);
+		respuesta.agregar("El ordenamiento duró:"+duration);
+		for(int i=0;i<10;i++){
+			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
+			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
+		}
+		for(int i=elementos.darTamano()-1;i>10;i--){
+			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
+			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
+		}
+		return respuesta; 
 	} 
 }
