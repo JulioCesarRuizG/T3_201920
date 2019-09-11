@@ -50,7 +50,7 @@ public class TestMVCModelo {
 	public void testShellsortOrganized() {
 	  setUp1();
 	  ArregloDinamico<String> proceso=modelo.OrdenarPorshellSort(datos);
-	  assertEquals("El algoritmo no agregó correctamente los datos",0,proceso.darElemento(21).compareTo("30,80,5,900,100,30,50"));
+	  assertEquals("El algoritmo no agregó correctamente los datos",0,proceso.darElemento(20).compareTo("30,80,5,900,100,30,50"));
 	  
 	}
 
