@@ -90,19 +90,20 @@ public class MVCModelo {
 		return cumplen;
 	}
 
-	public int OrdenarPorshellSort(UBERTrip elementos, int n) 
-	{ 
-		for (int num = n/2; num > 0; num /= 2) 
+	public int OrdenarPorshellSort(ArregloDinamico elementos) 
+	{   int N=elementos.darTamano();
+	    int h=1;
+		for (int num = N/2; num > 0; num /= 2) 
 		{ 
-			for (int i = num; i < n; i += 1) 
+			for (int i = num; i < N; i += 1) 
 			{ 
-				UBERTrip temp = (UBERTrip)arreglo.darElemento(i);
+				UBERTrip temp = (UBERTrip)elementos.darElemento(i);
 				int j;             
-				for (j = i; j >= num && arreglo.darElemento(j-num).compareTo(temp) >= 1; j -= num) 
+				for (j = i; j >= num && elementos.darElemento(j-num).compareTo(temp) >= 1; j -= num) 
 				{
-					arreglo.sobreEscribir(arreglo.darElemento(j-num), j);
+					elementos.sobreEscribir(elementos.darElemento(j-num), j);
 				}
-				arreglo.sobreEscribir(temp, j);
+				elementos.sobreEscribir(temp, j);
 			} 
 		} 
 		return 0; 
