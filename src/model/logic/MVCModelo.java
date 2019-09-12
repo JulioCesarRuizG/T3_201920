@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
+import java.lang.Math;
 
 import com.opencsv.CSVReader;
 
@@ -168,49 +169,55 @@ public class MVCModelo {
         }
 	}
 
-	public void OrdenarPorQuickSort(int inicio, int fin)
-	{
-		long total = 0;
+	public ArregloDinamico<String> OrdenarPorQuickSort(ArregloDinamico elementos ,int inicio, int fin)
+	{    	long total = 0;
 		long inicioTimer = System.currentTimeMillis();
-		if(inicio>=fin) return;
-		UBERTrip pivote=(UBERTrip) arreglo.darElemento(inicio);
+		ArregloDinamico aux= new ArregloDinamico(elementos.darTamano());
+	     while(elementos.darTamano()>0){
+	    	 int x= (int)Math.random()*(elementos.darTamano());
+	    	 aux.agregar(elementos.darElemento(x));
+	    	 elementos.eliminar(elementos.darElemento(x));
+	     }
+	     elementos=aux;
+		
+	
+		if(inicio>=fin) return null;
+		UBERTrip pivote=(UBERTrip) elementos.darElemento(inicio);
 		int elemIzq=inicio+1;
 		int elemDer=fin;
 		while(elemIzq<=elemDer){
-			while(elemIzq<=fin && arreglo.darElemento(elemIzq).compareTo(pivote)<0){
+			while(elemIzq<=fin && elementos.darElemento(elemIzq).compareTo(pivote)<0){
 				elemIzq++;
 			}
-			while(elemDer>inicio && arreglo.darElemento(elemDer).compareTo(pivote) >= 0){
+			while(elemDer>inicio && elementos.darElemento(elemDer).compareTo(pivote) >= 0){
 				elemDer--;
 			}
 			if(elemIzq<elemDer){
-				UBERTrip temp=(UBERTrip) arreglo.darElemento(elemIzq);
-				arreglo.sobreEscribir(arreglo.darElemento(elemDer), elemIzq);
-				arreglo.sobreEscribir(temp, elemDer);
+				UBERTrip temp=(UBERTrip) elementos.darElemento(elemIzq);
+				elementos.sobreEscribir(elementos.darElemento(elemDer), elemIzq);
+				elementos.sobreEscribir(temp, elemDer);
 			}
 		}
 
 		if(elemDer>inicio){
-			UBERTrip temp=(UBERTrip) arreglo.darElemento(inicio);
-			arreglo.sobreEscribir(arreglo.darElemento(elemDer), inicio);
-			arreglo.sobreEscribir(temp, elemDer);
+			UBERTrip temp=(UBERTrip) elementos.darElemento(inicio);
+			elementos.sobreEscribir(elementos.darElemento(elemDer), inicio);
+			elementos.sobreEscribir(temp, elemDer);
 		}
-		OrdenarPorQuickSort(inicio, elemDer-1);
-		OrdenarPorQuickSort(elemDer+1, fin);
+		OrdenarPorQuickSort(elementos,inicio, elemDer-1);
+		OrdenarPorQuickSort(elementos,elemDer+1, fin);
 		total += (System.currentTimeMillis()-inicioTimer);
-		System.out.println("El tiempo en milisegundo fue de: " + total);
-		System.out.println("Los primeros viajes fueron :");
-		for(int i=0 ; i<11 ; i++)
-		{
-			int num = i+1; 
-			System.out.println(num + ": " + arreglo.darElemento(i));
+		ArregloDinamico<String> respuesta=  new ArregloDinamico<String>(22);
+		respuesta.agregar("El ordenamiento duró:"+total);
+		for(int i=0;i<10;i++){
+			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
+			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 		}
-		System.out.println("Los últimos viajes fueron :");
-		for(int i=arreglo.darTamano()-1 ; i>arreglo.darTamano()-11 ; i--)
-		{
-			int num = i+1; 
-			System.out.println(num + ": " + arreglo.darElemento(i));
+		for(int i=elementos.darTamano()-1;i>10;i--){
+			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
+			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 		}
+		return respuesta;
 	}
 
 }

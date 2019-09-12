@@ -98,4 +98,15 @@ public class ArregloDinamico<T extends Comparable <T>> implements IArregloDinami
 		}
 		return null;
 	}
+	public T eliminarI(int indice){
+	    int mayor=0;
+		T eliminar = elementos[indice];
+		for(int j=indice ; j<elementos.length-1 ; j++)
+		{
+			elementos[j] = elementos[j+1]; 
+			mayor = j+1;
+		}
+		elementos[mayor] = null;
+		return eliminar;
+	}
 }
