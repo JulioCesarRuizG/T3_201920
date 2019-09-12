@@ -61,6 +61,10 @@ public class ArregloDinamico<T extends Comparable <T>> implements IArregloDinami
 		return elementos[i];
 	}
 
+	public T[] darElementos()
+	{
+		return elementos;
+	}
 	public void sobreEscribir(T dato, int i)
 	{
 		elementos[i] = dato;
