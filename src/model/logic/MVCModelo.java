@@ -124,64 +124,48 @@ public class MVCModelo {
 		return respuesta;
 	} 
 
-	public void OrdenarPorMergesort(int li, int ls){
-		long total = 0;
+	public ArregloDinamico<String> OrdenarPorMergesort(ArregloDinamico elementos){
 		long inicio = System.currentTimeMillis();
-		int mitad;
-		if (ls > li){
-			mitad = (ls + li)/2;
-			OrdenarPorMergesort(li, mitad);
-			OrdenarPorMergesort(mitad+1, ls);
-			merge(li, mitad+1, ls);
-		}
-		total += (System.currentTimeMillis()-inicio);
-		System.out.println("El tiempo en milisegundo fue de: " + total);
-		System.out.println("Los primeros viajes fueron :");
-		for(int i=0 ; i<11 ; i++)
-		{
-			int num = i+1; 
-			System.out.println(num + ": " + arreglo.darElemento(i));
-		}
-		System.out.println("Los últimos viajes fueron :");
-		for(int i=arreglo.darTamano()-1 ; i>arreglo.darTamano()-11 ; i--)
-		{
-			int num = i+1; 
-			System.out.println(num + ": " + arreglo.darElemento(i));
-		}
+		ArregloDinamico aux= new ArregloDinamico(elementos.darTamano());
+		int N=elementos.darTamano();
+	
+		 for (int len = 1; len < N; len *= 2) {
+	            for (int lo = 0; lo < N-len; lo += len+len) {
+	                int mid  = lo+len-1;
+	                int hi = Math.min(lo+len+len-1, N-1);
+	                merge(elementos, aux, lo, mid, hi);
+	            }
+	        }
+		 // está versión del mergesort se basa en la publicada por kevin-wayne en github, pero fue adecuada para nuestro taller
+		 long endTime = System.currentTimeMillis(); 
+			long duration=endTime-inicio;
+			ArregloDinamico<String> respuesta=  new ArregloDinamico<String>(22);
+			respuesta.agregar("El ordenamiento duró:"+duration);
+			for(int i=0;i<10;i++){
+				UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
+				respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
+			}
+			for(int i=elementos.darTamano()-1;i>10;i--){
+				UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
+				respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
+			}
+			return respuesta;
+	
 
 	}
 
-	private void merge(int Ires, int mitad, int Iizq){
-		ArregloDinamico aux = new ArregloDinamico(arreglo.darTamano());
+	private void merge(ArregloDinamico elementos, ArregloDinamico aux,int lo, int mid, int hi){
 		int contador = 0;
-		int izq = Iizq;
-		int der = mitad;
-		int ind = Ires;
-
-		while ((izq <= mitad - 1) && (ind <= Ires)){
-			if ( arreglo.darElemento(izq).compareTo(arreglo.darElemento(der)) <= 0)
-			{
-				aux.sobreEscribir(arreglo.darElemento(izq++), ind++); 
-			}
-			else
-			{
-				aux.sobreEscribir(arreglo.darElemento(der++), ind++); 
-			}
-
-		}
-		while (izq <= mitad - 1)
-		{
-			aux.sobreEscribir(arreglo.darElemento(izq++), ind++);
-		}
-
-		while (der <= Ires)
-		{
-			aux.sobreEscribir(arreglo.darElemento(der++), ind++);
-		}
-		for (izq=Iizq; izq <= Ires; izq++)
-		{
-			arreglo.sobreEscribir(aux.darElemento(izq), izq);
-		}
+		for (int k = lo; k <= hi; k++) {
+            aux.agregar(elementos.darElemento(k)); 
+        }
+		int i = lo, j = mid+1;
+        for (int k = lo; k <= hi; k++) {
+            if      (i > mid)              elementos.sobreEscribir(aux.darElemento(j++), k);
+            else if (j > hi)               elementos.sobreEscribir(aux.darElemento(i++), k); 
+            else if (aux.darElemento(j).compareTo(aux.darElemento(i))<0 ) elementos.sobreEscribir(aux.darElemento(j++), k);
+            else                           elementos.sobreEscribir(aux.darElemento(i++), k); 
+        }
 	}
 
 	public void OrdenarPorQuickSort(int inicio, int fin)
