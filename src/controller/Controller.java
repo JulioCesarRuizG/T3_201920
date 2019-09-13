@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
+import model.data_structures.ArregloDinamico;
 import model.logic.MVCModelo;
 import view.MVCView;
 
@@ -16,11 +17,12 @@ public class Controller {
 	/**
 	 * Crear la vista y el modelo del proyecto
 	 * @param capacidad tamaNo inicial del arreglo
+	 * @throws Exception 
 	 */
-	public Controller ()
+	public Controller () throws Exception
 	{
 		view = new MVCView();
-		modelo = new MVCModelo();
+		modelo = new MVCModelo(".data/bogota-cadastral-2018-2-All-HourlyAggregate.csv");
 	}
 		
 	public void run() 
@@ -33,61 +35,44 @@ public class Controller {
 		while( !fin ){
 			view.printMenu();
 
+			int valor = 0;
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
-					System.out.println("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
-				    int capacidad = lector.nextInt();
-				    modelo = new MVCModelo(capacidad); 
-					System.out.println("Arreglo Dinamico creado");
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					System.out.println("--------- \nHora de viajes a buscar ");
+					dato = lector.next();
+					valor = Integer.parseInt(dato);
+					modelo.darViajesPorHora(valor);				
 					break;
 
 				case 2:
-					System.out.println("--------- \nDar cadena (simple) a ingresar: ");
-					dato = lector.next();
-					modelo.agregar(dato);
-					System.out.println("Dato agregado");
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+					System.out.println("--------- \nEl resultado de ordenar ascendentemente por ShellSort fue: ");	
+					ArregloDinamico<String> datos = modelo.OrdenarPorshellSort(modelo.darViajesPorHora(valor));
+					for(int i=0 ; i<datos.darTamano()-1 ; i++)
+					{
+						System.out.println(datos.darElemento(i));
+					}
 					break;
 
 				case 3:
-					System.out.println("--------- \nDar cadena (simple) a buscar: ");
-					dato = lector.next();
-					respuesta = modelo.buscar(dato);
-					if ( respuesta != null)
+					System.out.println("--------- \nEl resultado de ordenar ascendentemente por MergeSort fue: ");	
+					ArregloDinamico<String> datos2 = modelo.OrdenarPorMergesort(modelo.darViajesPorHora(valor));
+					for(int i=0 ; i<datos2.darTamano()-1 ; i++)
 					{
-						System.out.println("Dato encontrado: "+ respuesta);
+						System.out.println(datos2.darElemento(i));
 					}
-					else
-					{
-						System.out.println("Dato NO encontrado");
-					}
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
 					break;
 
-				case 4:
-					System.out.println("--------- \nDar cadena (simple) a eliminar: ");
-					dato = lector.next();
-					respuesta = modelo.eliminar(dato);
-					if ( respuesta != null)
+				case 4: 
+					System.out.println("--------- \nEl resultado de ordenar ascendentemente por QuickSort fue: ");	
+					ArregloDinamico<String> datos3 = modelo.OrdenarPorMergesort(modelo.darViajesPorHora(valor));
+					for(int i=0 ; i<datos3.darTamano()-1 ; i++)
 					{
-						System.out.println("Dato eliminado "+ respuesta);
-					}
-					else
-					{
-						System.out.println("Dato NO eliminado");							
-					}
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
-					break;
-
-				case 5: 
-					System.out.println("--------- \nContenido del Arreglo: ");
-					view.printModelo(modelo);
-					System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
+						System.out.println(datos3.darElemento(i));
+					}					
 					break;	
 					
-				case 6: 
+				case 5: 
 					System.out.println("--------- \n Hasta pronto !! \n---------"); 
 					lector.close();
 					fin = true;

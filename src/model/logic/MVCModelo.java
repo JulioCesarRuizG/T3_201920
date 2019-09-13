@@ -73,6 +73,15 @@ public class MVCModelo {
 
 		}
 	}
+	public UBERTrip[] darElementos()
+	{
+		return elementos;
+	}
+	
+	public void agregar(UBERTrip a)
+	{
+		arreglo.agregar(a);
+	}
 
 
 	public ArregloDinamico darViajesPorHora(int hora)
@@ -118,7 +127,7 @@ public class MVCModelo {
 			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
 			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 		}
-		for(int i=elementos.darTamano()-1;i>10;i--){
+		for(int i=elementos.darTamano()-1;i>elementos.darTamano()-11;i--){
 			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
 			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 		}
@@ -146,7 +155,7 @@ public class MVCModelo {
 				UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
 				respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 			}
-			for(int i=elementos.darTamano()-1;i>10;i--){
+			for(int i=elementos.darTamano()-1;i>elementos.darTamano()-11;i--){
 				UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
 				respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 			}
@@ -161,6 +170,32 @@ public class MVCModelo {
             aux.agregar(elementos.darElemento(k)); 
         }
 		int i = lo, j = mid+1;
+		for(int k=i;k<j;k++) {
+			for(int z=k;z>lo;z--) {
+				if(elementos.darElemento(k).compareTo(elementos.darElemento(z))==-1) {
+					UBERTrip temp= (UBERTrip) elementos.darElemento(z);
+					elementos.sobreEscribir(elementos.darElemento(k), z);
+					elementos.sobreEscribir(temp, k);
+					
+				}else {
+					break;
+				}
+			}
+			
+		}
+		for(int k=j;k<hi;k++) {
+			for(int z=k;z>j;z--) {
+				if(elementos.darElemento(k).compareTo(elementos.darElemento(z))==-1) {
+					UBERTrip temp= (UBERTrip) elementos.darElemento(z);
+					elementos.sobreEscribir(elementos.darElemento(k), z);
+					elementos.sobreEscribir(temp, k);
+					
+				}else {
+					break;
+				}
+			}
+			
+		}
         for (int k = lo; k <= hi; k++) {
             if      (i > mid)              elementos.sobreEscribir(aux.darElemento(j++), k);
             else if (j > hi)               elementos.sobreEscribir(aux.darElemento(i++), k); 
@@ -213,7 +248,7 @@ public class MVCModelo {
 			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
 			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 		}
-		for(int i=elementos.darTamano()-1;i>10;i--){
+		for(int i=elementos.darTamano()-1;i>elementos.darTamano()-11;i--){
 			UBERTrip elemento = (UBERTrip) elementos.darElemento(i);
 			respuesta.agregar(elemento.darInicioID()+","+elemento.darDestinoID()+","+elemento.darHora()+","+elemento.darTiempoPromedioEnSegundos()+","+elemento.darDesviacionEstandar()+","+elemento.darTiempoPromedioGEnSegundos()+","+elemento.darDesviacionEstandarG());
 		}
